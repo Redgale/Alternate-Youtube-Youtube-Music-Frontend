@@ -7,10 +7,6 @@ import { stream } from './routes/stream.js';
 import { dash } from './routes/dash.js';
 
 const PORT = Number(process.env.PORT ?? 8787);
-const ALLOWED_ORIGINS = (process.env.ALLOWED_ORIGINS ?? 'http://localhost:5173')
-  .split(',')
-  .map((o) => o.trim())
-  .filter(Boolean);
 
 // This worker shares one domain with other future workers, each living
 // under its own path prefix (routed via the tunnel's Public Hostname path
@@ -20,10 +16,13 @@ const PATH_PREFIX = (process.env.PATH_PREFIX ?? '/ytdash').replace(/\/$/, '');
 
 const app = new Hono();
 
+// Open to any origin: these are read-only GET endpoints with no cookies/auth,
+// and callers legitimately show up from unpredictable origins (blob: pages
+// hosted by third-party launchers inherit whatever origin created them).
 app.use(
   `${PATH_PREFIX}/api/*`,
   cors({
-    origin: ALLOWED_ORIGINS,
+    origin: '*',
     allowMethods: ['GET'],
   }),
 );
@@ -38,5 +37,4 @@ app.route(`${PATH_PREFIX}/api/dash`, dash);
 
 serve({ fetch: app.fetch, port: PORT }, (info) => {
   console.log(`media-dashboard-worker listening on http://localhost:${info.port}${PATH_PREFIX}`);
-  console.log(`allowed origins: ${ALLOWED_ORIGINS.join(', ')}`);
 });

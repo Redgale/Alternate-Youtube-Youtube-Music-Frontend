@@ -23,15 +23,29 @@ brand.textContent = 'Dashboard';
 const nav = document.createElement('nav');
 nav.className = 'shell__nav';
 
+// Navigation happens via navigate() rather than a plain href="#/..." fragment
+// so it works when this document is hosted under a <base href="..."> pointing
+// elsewhere (e.g. a portal wrapping this page in a blob: URL and injecting an
+// absolute base so its other relative asset references resolve) — under a
+// foreign <base>, an href-driven click would resolve to a real cross-origin
+// URL instead of just updating the current document's hash.
 const videosLink = document.createElement('a');
 videosLink.className = 'shell__nav-link';
 videosLink.textContent = 'Videos';
 videosLink.href = '#/';
+videosLink.addEventListener('click', (e) => {
+  e.preventDefault();
+  navigate('/');
+});
 
 const musicLink = document.createElement('a');
 musicLink.className = 'shell__nav-link';
 musicLink.textContent = 'Music';
 musicLink.href = '#/music';
+musicLink.addEventListener('click', (e) => {
+  e.preventDefault();
+  navigate('/music');
+});
 
 nav.append(videosLink, musicLink);
 header.append(brand, nav);

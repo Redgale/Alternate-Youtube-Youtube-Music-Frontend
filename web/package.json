@@ -10,7 +10,8 @@
   },
   "devDependencies": {
     "typescript": "^5.7.2",
-    "vite": "^6.0.7"
+    "vite": "^6.0.7",
+    "vite-plugin-singlefile": "^2.3.3"
   },
   "dependencies": {
     "dashjs": "^5.2.1"
