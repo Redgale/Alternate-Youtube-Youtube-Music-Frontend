@@ -154,13 +154,17 @@ stream.get('/', async (c) => {
   const itagParam = c.req.query('itag');
   const download = c.req.query('download') === '1';
   const kind = c.req.query('kind') === 'audio' || mode === 'music' ? 'audio' : 'video';
+<<<<<<< HEAD
   const isLiveProxy = c.req.query('live') === '1';
   const cdnUrl = c.req.query('cdn')?.trim();
+=======
+>>>>>>> 37ae4b418d092e5a05f958e4f5cc6af624948be1
 
   if (!id) {
     return c.json({ error: 'Missing required query param: id' }, 400);
   }
 
+<<<<<<< HEAD
   // Live DASH segment proxy: the rewritten official live MPD points media
   // URLs here with ?live=1&cdn=<original googlevideo URL>. We re-fetch that
   // URL with a fresh po_token so the browser never talks to the CDN directly
@@ -211,6 +215,8 @@ stream.get('/', async (c) => {
     }
   }
 
+=======
+>>>>>>> 37ae4b418d092e5a05f958e4f5cc6af624948be1
   const yt = await getInnertube();
 
   try {

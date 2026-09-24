@@ -10,7 +10,10 @@ interface FilterableFormat {
   is_auto_dubbed?: boolean;
   is_original?: boolean;
   has_audio: boolean;
+<<<<<<< HEAD
   itag?: number;
+=======
+>>>>>>> 37ae4b418d092e5a05f958e4f5cc6af624948be1
 }
 
 /**
@@ -26,6 +29,7 @@ function shouldReject(format: FilterableFormat): boolean {
   return false;
 }
 
+<<<<<<< HEAD
 type InnerTubeClient = 'MWEB' | 'TV' | 'ANDROID' | 'WEB';
 
 /**
@@ -36,6 +40,8 @@ type InnerTubeClient = 'MWEB' | 'TV' | 'ANDROID' | 'WEB';
  */
 const CLIENT_FALLBACKS: InnerTubeClient[] = ['MWEB', 'TV', 'ANDROID'];
 
+=======
+>>>>>>> 37ae4b418d092e5a05f958e4f5cc6af624948be1
 /**
  * Generates a DASH manifest for a video, with every representation's URL
  * rewritten to point back at our own /api/stream proxy instead of the raw
@@ -46,12 +52,15 @@ const CLIENT_FALLBACKS: InnerTubeClient[] = ['MWEB', 'TV', 'ANDROID'];
  * download button already does. dash.js (MSE) plays this manifest with
  * real video+audio sync, using our proxy's existing Range-request support
  * for seeking.
+<<<<<<< HEAD
  *
  * Livestreams: youtubei.js's toDash() throws for is_live content. For those
  * we proxy YouTube's own dash_manifest_url (when present) after rewriting
  * BaseURL / media URLs through our stream endpoint so CORS and po_token
  * stay under our control. Pure HLS-only lives are reported clearly so the
  * frontend can surface a useful message.
+=======
+>>>>>>> 37ae4b418d092e5a05f958e4f5cc6af624948be1
  */
 dash.get('/', async (c) => {
   const id = c.req.query('id')?.trim();
@@ -63,6 +72,7 @@ dash.get('/', async (c) => {
   const streamPath = c.req.path.replace(/\/api\/dash$/, '/api/stream');
 
   const yt = await getInnertube();
+<<<<<<< HEAD
   const poToken = await mintPoToken(id);
 
   let lastError: unknown = null;
@@ -170,4 +180,42 @@ dash.get('/', async (c) => {
 
   const message = lastError instanceof Error ? lastError.message : 'Unknown error';
   return c.json({ error: `Failed to build manifest: ${message}` }, 502);
+=======
+
+  try {
+    const poToken = await mintPoToken(id);
+    const info = await yt.getInfo(id, { client: 'MWEB', po_token: poToken });
+
+    // Serve exactly one video + one audio representation rather than a full
+    // quality ladder. dash.js's startup ABR probing fires near-simultaneous
+    // requests across every representation, which reads as bot-like traffic
+    // to YouTube and was triggering 403s from the CDN — a single
+    // representation each means there's nothing to probe between.
+    // 'best' rather than a fixed '1080p' label: the MWEB client (needed for
+    // full-length playback — see stream.ts) caps out well below 1080p for
+    // plenty of videos, and an exact-label request throws outright when
+    // that label doesn't exist rather than falling back.
+    const videoFormat = info.chooseFormat({ type: 'video', quality: 'best' });
+    const audioFormat = info.chooseFormat({ type: 'audio', quality: 'best' });
+    const keepItags = new Set([videoFormat.itag, audioFormat.itag]);
+
+    const manifest = await info.toDash({
+      url_transformer: (url) => {
+        const itag = url.searchParams.get('itag');
+        const proxied = new URL(streamPath, origin);
+        proxied.searchParams.set('id', id);
+        proxied.searchParams.set('mode', 'video');
+        if (itag) proxied.searchParams.set('itag', itag);
+        return proxied;
+      },
+      format_filter: (format: FilterableFormat & { itag: number }) =>
+        shouldReject(format) || !keepItags.has(format.itag),
+    });
+
+    return c.body(manifest, 200, { 'Content-Type': 'application/dash+xml', 'Cache-Control': 'no-store' });
+  } catch (err) {
+    const message = err instanceof Error ? err.message : 'Unknown error';
+    return c.json({ error: `Failed to build manifest: ${message}` }, 502);
+  }
+>>>>>>> 37ae4b418d092e5a05f958e4f5cc6af624948be1
 });

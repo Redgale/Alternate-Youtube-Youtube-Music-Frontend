@@ -30,11 +30,14 @@ info.get('/', async (c) => {
         contentLength: f.content_length ?? null,
       }));
 
+<<<<<<< HEAD
     const isLive = !!(basic.is_live || basic.is_live_content);
     // Official live manifests (only present for live / post-live DVR).
     const hlsManifestUrl = details.streaming_data?.hls_manifest_url ?? null;
     const dashManifestUrl = details.streaming_data?.dash_manifest_url ?? null;
 
+=======
+>>>>>>> 37ae4b418d092e5a05f958e4f5cc6af624948be1
     return c.json({
       mode,
       id: basic.id ?? id,
@@ -45,9 +48,12 @@ info.get('/', async (c) => {
       viewCount: basic.view_count ?? null,
       shortDescription: basic.short_description ?? null,
       formats,
+<<<<<<< HEAD
       isLive,
       hlsManifestUrl,
       dashManifestUrl,
+=======
+>>>>>>> 37ae4b418d092e5a05f958e4f5cc6af624948be1
     });
   } catch (err) {
     const message = err instanceof Error ? err.message : 'Unknown error';

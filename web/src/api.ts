@@ -41,10 +41,13 @@ export interface InfoResponse {
   viewCount: number | null;
   shortDescription: string | null;
   formats: FormatInfo[];
+<<<<<<< HEAD
   /** True for ongoing livestreams and some post-live DVR content. */
   isLive?: boolean;
   hlsManifestUrl?: string | null;
   dashManifestUrl?: string | null;
+=======
+>>>>>>> 37ae4b418d092e5a05f958e4f5cc6af624948be1
 }
 
 async function request<T>(path: string, params: Record<string, string>): Promise<T> {
@@ -52,6 +55,7 @@ async function request<T>(path: string, params: Record<string, string>): Promise
   for (const [key, value] of Object.entries(params)) {
     url.searchParams.set(key, value);
   }
+<<<<<<< HEAD
   let res: Response;
   try {
     res = await fetch(url);
@@ -84,6 +88,14 @@ async function request<T>(path: string, params: Record<string, string>): Promise
     throw new Error('Empty response from server');
   }
   return body as T;
+=======
+  const res = await fetch(url);
+  if (!res.ok) {
+    const body = await res.json().catch(() => ({ error: res.statusText }));
+    throw new Error(body.error ?? `Request failed: ${res.status}`);
+  }
+  return res.json() as Promise<T>;
+>>>>>>> 37ae4b418d092e5a05f958e4f5cc6af624948be1
 }
 
 export function search(query: string, mode: Mode): Promise<SearchResponse> {
