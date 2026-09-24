@@ -154,11 +154,69 @@ stream.get('/', async (c) => {
   const itagParam = c.req.query('itag');
   const download = c.req.query('download') === '1';
   const kind = c.req.query('kind') === 'audio' || mode === 'music' ? 'audio' : 'video';
+<<<<<<< HEAD
+  const isLiveProxy = c.req.query('live') === '1';
+  const cdnUrl = c.req.query('cdn')?.trim();
+=======
+>>>>>>> 37ae4b418d092e5a05f958e4f5cc6af624948be1
 
   if (!id) {
     return c.json({ error: 'Missing required query param: id' }, 400);
   }
 
+<<<<<<< HEAD
+  // Live DASH segment proxy: the rewritten official live MPD points media
+  // URLs here with ?live=1&cdn=<original googlevideo URL>. We re-fetch that
+  // URL with a fresh po_token so the browser never talks to the CDN directly
+  // (CORS + token requirements).
+  if (isLiveProxy && cdnUrl) {
+    try {
+      if (!/^https?:\/\/[^/]*(googlevideo\.com|youtube\.com)\//i.test(cdnUrl)) {
+        return c.json({ error: 'Invalid CDN host' }, 400);
+      }
+      const poToken = await mintPoToken(id);
+      const rangeHeader = c.req.header('range');
+      const headers: Record<string, string> = {
+        'User-Agent': 'Mozilla/5.0',
+      };
+      const target = new URL(cdnUrl);
+      if (!target.searchParams.has('pot')) {
+        target.searchParams.set('pot', poToken);
+      }
+      if (rangeHeader) headers['Range'] = rangeHeader;
+
+      let res = await fetch(target.toString(), { headers });
+      if (!res.ok) {
+        const fresh = await mintPoToken(id, true);
+        target.searchParams.set('pot', fresh);
+        res = await fetch(target.toString(), { headers });
+      }
+      if (!res.ok || !res.body) {
+        return c.json({ error: `CDN responded ${res.status}` }, 502);
+      }
+
+      const outHeaders = new Headers({
+        'Content-Type': res.headers.get('content-type') ?? 'application/octet-stream',
+        'Accept-Ranges': 'bytes',
+        'Cache-Control': 'no-store',
+      });
+      const contentRange = res.headers.get('content-range');
+      const contentLength = res.headers.get('content-length');
+      if (contentRange) outHeaders.set('Content-Range', contentRange);
+      if (contentLength) outHeaders.set('Content-Length', contentLength);
+
+      return new Response(res.body, {
+        status: res.status,
+        headers: outHeaders,
+      });
+    } catch (err) {
+      const message = err instanceof Error ? err.message : 'Unknown error';
+      return c.json({ error: `Live segment proxy failed: ${message}` }, 502);
+    }
+  }
+
+=======
+>>>>>>> 37ae4b418d092e5a05f958e4f5cc6af624948be1
   const yt = await getInnertube();
 
   try {

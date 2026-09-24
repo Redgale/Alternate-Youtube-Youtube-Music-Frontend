@@ -41,6 +41,13 @@ export interface InfoResponse {
   viewCount: number | null;
   shortDescription: string | null;
   formats: FormatInfo[];
+<<<<<<< HEAD
+  /** True for ongoing livestreams and some post-live DVR content. */
+  isLive?: boolean;
+  hlsManifestUrl?: string | null;
+  dashManifestUrl?: string | null;
+=======
+>>>>>>> 37ae4b418d092e5a05f958e4f5cc6af624948be1
 }
 
 async function request<T>(path: string, params: Record<string, string>): Promise<T> {
@@ -48,12 +55,47 @@ async function request<T>(path: string, params: Record<string, string>): Promise
   for (const [key, value] of Object.entries(params)) {
     url.searchParams.set(key, value);
   }
+<<<<<<< HEAD
+  let res: Response;
+  try {
+    res = await fetch(url);
+  } catch (err) {
+    // Network / CORS / mixed-content failures surface as TypeError from fetch.
+    const msg = err instanceof Error ? err.message : String(err);
+    throw new Error(`Network error reaching API (${url.origin}): ${msg}`);
+  }
+  const text = await res.text();
+  let body: { error?: string } | T | null = null;
+  if (text) {
+    try {
+      body = JSON.parse(text) as { error?: string } | T;
+    } catch {
+      throw new Error(
+        res.ok
+          ? `Invalid JSON response from server (${res.status})`
+          : `Request failed: ${res.status} ${res.statusText}`,
+      );
+    }
+  }
+  if (!res.ok) {
+    const errMsg =
+      body && typeof body === 'object' && 'error' in body && body.error
+        ? body.error
+        : `Request failed: ${res.status}`;
+    throw new Error(errMsg);
+  }
+  if (body == null) {
+    throw new Error('Empty response from server');
+  }
+  return body as T;
+=======
   const res = await fetch(url);
   if (!res.ok) {
     const body = await res.json().catch(() => ({ error: res.statusText }));
     throw new Error(body.error ?? `Request failed: ${res.status}`);
   }
   return res.json() as Promise<T>;
+>>>>>>> 37ae4b418d092e5a05f958e4f5cc6af624948be1
 }
 
 export function search(query: string, mode: Mode): Promise<SearchResponse> {
