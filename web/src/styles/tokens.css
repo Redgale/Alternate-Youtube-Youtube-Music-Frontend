@@ -1,0 +1,67 @@
+:root {
+  --bg: #0b0c0f;
+  --bg-raised: #131519;
+  --bg-inset: #1a1d23;
+  --border: #24272e;
+  --text: #eef0f3;
+  --text-dim: #9aa1ac;
+  --text-faint: #666c76;
+
+  --video-accent: #ff5c5c;
+  --video-accent-dim: #4a2020;
+  --music-accent: #4ee3a8;
+  --music-accent-dim: #123527;
+  --shorts-accent: #f5c542;
+  --shorts-accent-dim: #3d3210;
+
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 16px;
+
+  --font-sans:
+    'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --font-mono: 'IBM Plex Mono', ui-monospace, monospace;
+
+  --shell-header-h: 60px;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+}
+
+body {
+  overflow-x: hidden;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button {
+  font-family: inherit;
+  color: inherit;
+  cursor: pointer;
+}
+
+::selection {
+  background: var(--music-accent-dim);
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+}

@@ -1,0 +1,328 @@
+.shell {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.shell__header {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  height: var(--shell-header-h);
+  display: flex;
+  align-items: center;
+  gap: 32px;
+  padding: 0 28px;
+  background: rgba(11, 12, 15, 0.85);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--border);
+}
+
+.shell__brand {
+  font-weight: 700;
+  font-size: 15px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+}
+
+.shell__nav {
+  display: flex;
+  gap: 4px;
+}
+
+.shell__nav-link {
+  padding: 8px 14px;
+  border-radius: var(--radius-sm);
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-dim);
+  transition: color 0.15s ease, background 0.15s ease;
+}
+
+.shell__nav-link:hover {
+  color: var(--text);
+  background: var(--bg-raised);
+}
+
+.shell__nav-link.is-active {
+  color: var(--text);
+  background: var(--bg-inset);
+}
+
+.shell__main {
+  flex: 1;
+  padding: 28px 40px 60px;
+  max-width: 1400px;
+  width: 100%;
+  margin: 0 auto;
+}
+
+.view__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  margin-bottom: 28px;
+  flex-wrap: wrap;
+}
+
+.view__heading {
+  font-size: 22px;
+  font-weight: 700;
+  margin: 0;
+  color: var(--video-accent);
+}
+
+.view__heading--music {
+  color: var(--music-accent);
+}
+
+.view__loading,
+.view__empty,
+.view__error {
+  color: var(--text-dim);
+  font-size: 14px;
+  padding: 40px 0;
+  text-align: center;
+}
+
+.view__error {
+  color: var(--video-accent);
+}
+
+/* Video grid */
+.video-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 20px 16px;
+}
+
+/* Watch view */
+.view--watch {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 20px;
+  max-width: 920px;
+  margin: 0 auto;
+}
+
+.watch-player {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  background: #000;
+  border-radius: var(--radius-md);
+  overflow: hidden;
+}
+
+.watch-player video {
+  width: 100%;
+  height: 100%;
+  display: block;
+  background: #000;
+}
+
+.watch-player__error {
+  position: absolute;
+  inset: 0;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 24px;
+  margin: 0;
+  color: var(--text-dim);
+  font-size: 14px;
+  background: var(--bg-inset);
+  pointer-events: none;
+}
+
+/* An author-stylesheet `display` always wins over the UA [hidden] default
+   regardless of specificity, so the base rule above must default to none
+   and only re-enable flex once the hidden attribute is actually removed. */
+.watch-player__error:not([hidden]) {
+  display: flex;
+}
+
+.watch-info__title {
+  font-size: 19px;
+  font-weight: 700;
+  margin: 0 0 6px;
+}
+
+.watch-info__sub {
+  color: var(--text-dim);
+  font-size: 13px;
+  margin: 0 0 16px;
+}
+
+.watch-info__actions {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 18px;
+}
+
+.watch-info__desc {
+  color: var(--text-dim);
+  font-size: 13px;
+  line-height: 1.6;
+  white-space: pre-wrap;
+  max-width: 70ch;
+}
+
+/* Track list */
+.track-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+  gap: 4px 20px;
+}
+
+/* Floating player */
+.floating-player {
+  position: fixed;
+  right: 24px;
+  bottom: 24px;
+  width: 260px;
+  z-index: 40;
+  display: none;
+  flex-direction: column;
+  gap: 10px;
+  padding: 14px;
+  background: var(--bg-raised);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  box-shadow: 0 16px 48px rgba(0, 0, 0, 0.55);
+}
+
+/* An author-stylesheet `display` always wins over the UA [hidden] default
+   regardless of specificity, so the base rule above must default to none
+   and only re-enable flex once the hidden attribute is actually removed. */
+.floating-player:not([hidden]) {
+  display: flex;
+}
+
+.floating-player.is-dragging {
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.7);
+}
+
+.floating-player__handle {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  cursor: grab;
+  touch-action: none;
+}
+
+.floating-player.is-dragging .floating-player__handle {
+  cursor: grabbing;
+}
+
+.floating-player__thumb {
+  width: 48px;
+  height: 48px;
+  border-radius: var(--radius-sm);
+  object-fit: cover;
+  flex-shrink: 0;
+  background: var(--bg-inset);
+  pointer-events: none;
+}
+
+.floating-player__meta {
+  min-width: 0;
+  flex: 1;
+}
+
+.floating-player__title {
+  font-size: 13px;
+  font-weight: 600;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.floating-player__sub {
+  font-size: 12px;
+  color: var(--text-dim);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.floating-player__controls {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+
+.floating-player__status {
+  font-size: 11px;
+  color: var(--text-dim);
+  text-align: center;
+}
+
+@media (max-width: 640px) {
+  .shell__header {
+    padding: 0 16px;
+    gap: 16px;
+  }
+  .shell__main {
+    padding: 16px 16px 100px;
+  }
+  .watch-info__desc {
+    max-width: 100%;
+  }
+  .floating-player {
+    right: 12px;
+    bottom: 12px;
+    width: 220px;
+  }
+}
+
+
+.view__heading--shorts {
+  color: var(--shorts-accent);
+}
+
+.shell__main--shorts {
+  max-width: none;
+  padding: 12px 16px 24px;
+}
+
+.view--shorts {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  height: calc(100vh - var(--shell-header-h) - 36px);
+  min-height: 480px;
+}
+
+.shorts__header {
+  margin-bottom: 0;
+  flex-shrink: 0;
+}
+
+.shorts-stage {
+  flex: 1;
+  min-height: 0;
+  position: relative;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  background: #000;
+  outline: none;
+  touch-action: pan-y;
+  user-select: none;
+}
+
+.shorts-stage:focus-visible {
+  box-shadow: 0 0 0 2px var(--shorts-accent);
+}
+
+.shorts-hint {
+  margin: 0;
+  text-align: center;
+  font-size: 12px;
+  color: var(--text-faint);
+  flex-shrink: 0;
+}
