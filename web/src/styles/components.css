@@ -243,3 +243,73 @@
   filter: brightness(1.08);
   background: var(--music-accent);
 }
+<<<<<<< HEAD
+
+
+/* Shorts vertical feed */
+.shorts-slide {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transform: translateY(12px);
+  transition: opacity 0.2s ease, transform 0.25s ease;
+}
+
+.shorts-slide--visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.shorts-slide__video {
+  position: absolute;
+  inset: 0;
+  background: #000;
+  cursor: pointer;
+}
+
+.shorts-slide__video video {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
+  background: #000;
+}
+
+.shorts-slide__overlay {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  padding: 48px 20px 20px;
+  background: linear-gradient(transparent, rgba(0, 0, 0, 0.75));
+  pointer-events: none;
+  z-index: 2;
+}
+
+.shorts-slide__title {
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 1.35;
+  margin-bottom: 6px;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.shorts-slide__sub {
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.75);
+  margin-bottom: 8px;
+}
+
+.shorts-slide__counter {
+  font-size: 11px;
+  font-variant-numeric: tabular-nums;
+  color: rgba(255, 255, 255, 0.45);
+}
+=======
+>>>>>>> 3a6c7022f3ade0cad61e1ba2bd8746b85184e870

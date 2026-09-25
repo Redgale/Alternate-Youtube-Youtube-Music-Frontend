@@ -3,7 +3,11 @@ const API_BASE_URL: string = import.meta.env.VITE_API_BASE_URL ?? 'http://localh
 // own path prefix — everything it exposes lives under /ytdash.
 const PATH_PREFIX = '/ytdash';
 
+<<<<<<< HEAD
+export type Mode = 'video' | 'music' | 'shorts';
+=======
 export type Mode = 'video' | 'music';
+>>>>>>> 3a6c7022f3ade0cad61e1ba2bd8746b85184e870
 
 export interface ResultItem {
   id: string;
@@ -42,12 +46,18 @@ export interface InfoResponse {
   shortDescription: string | null;
   formats: FormatInfo[];
 <<<<<<< HEAD
+=======
+<<<<<<< HEAD
+>>>>>>> 3a6c7022f3ade0cad61e1ba2bd8746b85184e870
   /** True for ongoing livestreams and some post-live DVR content. */
   isLive?: boolean;
   hlsManifestUrl?: string | null;
   dashManifestUrl?: string | null;
+<<<<<<< HEAD
+=======
 =======
 >>>>>>> 37ae4b418d092e5a05f958e4f5cc6af624948be1
+>>>>>>> 3a6c7022f3ade0cad61e1ba2bd8746b85184e870
 }
 
 async function request<T>(path: string, params: Record<string, string>): Promise<T> {
@@ -56,6 +66,9 @@ async function request<T>(path: string, params: Record<string, string>): Promise
     url.searchParams.set(key, value);
   }
 <<<<<<< HEAD
+=======
+<<<<<<< HEAD
+>>>>>>> 3a6c7022f3ade0cad61e1ba2bd8746b85184e870
   let res: Response;
   try {
     res = await fetch(url);
@@ -88,6 +101,8 @@ async function request<T>(path: string, params: Record<string, string>): Promise
     throw new Error('Empty response from server');
   }
   return body as T;
+<<<<<<< HEAD
+=======
 =======
   const res = await fetch(url);
   if (!res.ok) {
@@ -96,6 +111,7 @@ async function request<T>(path: string, params: Record<string, string>): Promise
   }
   return res.json() as Promise<T>;
 >>>>>>> 37ae4b418d092e5a05f958e4f5cc6af624948be1
+>>>>>>> 3a6c7022f3ade0cad61e1ba2bd8746b85184e870
 }
 
 export function search(query: string, mode: Mode): Promise<SearchResponse> {

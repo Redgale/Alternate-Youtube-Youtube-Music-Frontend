@@ -42,13 +42,21 @@ export function renderWatch(container: HTMLElement, videoId: string): void {
   // for it. Long VODs and (most) livestreams are supported via the worker's
   // client-fallback + official live-MPD rewrite path.
 =======
+<<<<<<< HEAD
+  // for it. Long VODs and (most) livestreams are supported via the worker's
+  // client-fallback + official live-MPD rewrite path.
+=======
   // for it.
 >>>>>>> 37ae4b418d092e5a05f958e4f5cc6af624948be1
+>>>>>>> 3a6c7022f3ade0cad61e1ba2bd8746b85184e870
   import('dashjs').then((dashjs) => {
     if (video.isConnected === false) return; // navigated away before this loaded
     const player = dashjs.MediaPlayer().create();
     activePlayer = player;
 <<<<<<< HEAD
+=======
+<<<<<<< HEAD
+>>>>>>> 3a6c7022f3ade0cad61e1ba2bd8746b85184e870
     player.on(dashjs.MediaPlayer.events.ERROR, (e: unknown) => {
       const detail =
         e && typeof e === 'object' && 'error' in e
@@ -57,10 +65,13 @@ export function renderWatch(container: HTMLElement, videoId: string): void {
       playerError.textContent = detail
         ? `Playback error: ${detail}`
         : "This video can't be played (removed, private, live-HLS-only, or unavailable).";
+<<<<<<< HEAD
+=======
 =======
     player.on(dashjs.MediaPlayer.events.ERROR, () => {
       playerError.textContent = "This video can't be played (removed, private, or unavailable).";
 >>>>>>> 37ae4b418d092e5a05f958e4f5cc6af624948be1
+>>>>>>> 3a6c7022f3ade0cad61e1ba2bd8746b85184e870
       playerError.hidden = false;
     });
     player.initialize(video, dashManifestUrl(videoId), true);
@@ -77,6 +88,9 @@ export function renderWatch(container: HTMLElement, videoId: string): void {
       const sub = document.createElement('p');
       sub.className = 'watch-info__sub';
 <<<<<<< HEAD
+=======
+<<<<<<< HEAD
+>>>>>>> 3a6c7022f3ade0cad61e1ba2bd8746b85184e870
       const parts = [
         data.isLive ? 'LIVE' : null,
         data.author,
@@ -85,17 +99,23 @@ export function renderWatch(container: HTMLElement, videoId: string): void {
           ? new Date(data.durationSeconds * 1000).toISOString().substr(11, 8).replace(/^00:/, '')
           : null,
       ].filter(Boolean);
+<<<<<<< HEAD
+=======
 =======
       const parts = [data.author, data.viewCount ? `${data.viewCount.toLocaleString()} views` : null].filter(
         Boolean,
       );
 >>>>>>> 37ae4b418d092e5a05f958e4f5cc6af624948be1
+>>>>>>> 3a6c7022f3ade0cad61e1ba2bd8746b85184e870
       sub.textContent = parts.join(' · ');
 
       const actions = document.createElement('div');
       actions.className = 'watch-info__actions';
 
 <<<<<<< HEAD
+=======
+<<<<<<< HEAD
+>>>>>>> 3a6c7022f3ade0cad61e1ba2bd8746b85184e870
       if (!data.isLive) {
         const videoBtn = document.createElement('a');
         videoBtn.className = 'button button--primary';
@@ -115,6 +135,8 @@ export function renderWatch(container: HTMLElement, videoId: string): void {
           'Livestream — downloads are disabled while the stream is ongoing.';
         actions.append(liveNote);
       }
+<<<<<<< HEAD
+=======
 =======
       const videoBtn = document.createElement('a');
       videoBtn.className = 'button button--primary';
@@ -128,6 +150,7 @@ export function renderWatch(container: HTMLElement, videoId: string): void {
 
       actions.append(videoBtn, audioBtn);
 >>>>>>> 37ae4b418d092e5a05f958e4f5cc6af624948be1
+>>>>>>> 3a6c7022f3ade0cad61e1ba2bd8746b85184e870
 
       const desc = document.createElement('p');
       desc.className = 'watch-info__desc';

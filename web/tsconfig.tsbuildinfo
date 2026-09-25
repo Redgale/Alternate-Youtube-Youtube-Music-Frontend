@@ -1,1 +1,5 @@
+<<<<<<< HEAD
+{"root":["./src/api.ts","./src/main.ts","./src/router.ts","./src/state.ts","./src/vite-env.d.ts","./src/components/floating-player.ts","./src/components/search-bar.ts","./src/components/track-row.ts","./src/components/video-card.ts","./src/views/home.ts","./src/views/music.ts","./src/views/shorts.ts","./src/views/watch.ts"],"version":"5.9.3"}
+=======
 {"root":["./src/api.ts","./src/main.ts","./src/router.ts","./src/state.ts","./src/vite-env.d.ts","./src/components/floating-player.ts","./src/components/search-bar.ts","./src/components/track-row.ts","./src/components/video-card.ts","./src/views/home.ts","./src/views/music.ts","./src/views/watch.ts"],"version":"5.9.3"}
+>>>>>>> 3a6c7022f3ade0cad61e1ba2bd8746b85184e870
