@@ -10,8 +10,7 @@ interface ResultItem {
   durationText: string | null;
   durationSeconds: number | null;
   author: string | null;
-<<<<<<< HEAD
-  meta: string | null;
+  meta: string | null; // view count (video), album name (music), or short view count
 }
 
 type Mode = 'video' | 'music' | 'shorts';
@@ -116,20 +115,13 @@ function collectShortsFromSearch(res: {
     }
   }
   return results;
-=======
-  meta: string | null; // view count (video) or album name (music)
->>>>>>> 3a6c7022f3ade0cad61e1ba2bd8746b85184e870
 }
 
 search.get('/', async (c) => {
   const q = c.req.query('q')?.trim();
-<<<<<<< HEAD
   const modeParam = c.req.query('mode');
   const mode: Mode =
     modeParam === 'music' ? 'music' : modeParam === 'shorts' ? 'shorts' : 'video';
-=======
-  const mode = c.req.query('mode') === 'music' ? 'music' : 'video';
->>>>>>> 3a6c7022f3ade0cad61e1ba2bd8746b85184e870
 
   if (!q) {
     return c.json({ error: 'Missing required query param: q' }, 400);
@@ -141,7 +133,6 @@ search.get('/', async (c) => {
   if (mode === 'video') {
     const res = await yt.search(q, { type: 'video' });
     for (const item of res.results) {
-<<<<<<< HEAD
       if ((item as { type?: string }).type !== 'Video') continue;
       pushShort(results, item); // reuse mapper (ids/titles/thumbs)
     }
@@ -196,28 +187,6 @@ search.get('/', async (c) => {
     results.push(...shorts);
     // mark so client knows we used shorts path
     return c.json({ mode, query: q, results, shortsRefinementApplied: applied });
-=======
-      if (item.type !== 'Video') continue;
-      const video = item as unknown as {
-        video_id: string;
-        title: { toString(): string };
-        best_thumbnail?: { url: string } | null;
-        duration: { text?: string; seconds: number };
-        author?: { name: string };
-        view_count?: { toString(): string };
-        short_view_count?: { toString(): string };
-      };
-      results.push({
-        id: video.video_id,
-        title: video.title?.toString() ?? '',
-        thumbnail: video.best_thumbnail?.url ?? null,
-        durationText: video.duration?.text ?? null,
-        durationSeconds: video.duration?.seconds ?? null,
-        author: video.author?.name ?? null,
-        meta: video.short_view_count?.toString() ?? video.view_count?.toString() ?? null,
-      });
-    }
->>>>>>> 3a6c7022f3ade0cad61e1ba2bd8746b85184e870
   } else {
     const res = await yt.music.search(q, { type: 'song' });
     const shelfItems = res.songs?.contents ?? [];
