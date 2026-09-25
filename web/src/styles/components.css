@@ -243,6 +243,7 @@
   filter: brightness(1.08);
   background: var(--music-accent);
 }
+<<<<<<< HEAD
 
 
 /* Shorts vertical feed */
@@ -310,3 +311,5 @@
   font-variant-numeric: tabular-nums;
   color: rgba(255, 255, 255, 0.45);
 }
+=======
+>>>>>>> 3a6c7022f3ade0cad61e1ba2bd8746b85184e870

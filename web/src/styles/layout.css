@@ -279,6 +279,7 @@
     width: 220px;
   }
 }
+<<<<<<< HEAD
 
 
 .view__heading--shorts {
@@ -326,3 +327,5 @@
   color: var(--text-faint);
   flex-shrink: 0;
 }
+=======
+>>>>>>> 3a6c7022f3ade0cad61e1ba2bd8746b85184e870
